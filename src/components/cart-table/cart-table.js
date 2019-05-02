@@ -16,7 +16,7 @@ const CartTable = (props) => {
   const getRows = () => {
     return data.map((item) => {
       return (
-        <CartTableItem item={item} />
+        <CartTableItem key={item.id} item={item} />
       );
     });
   };
