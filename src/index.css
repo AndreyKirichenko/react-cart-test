@@ -6,17 +6,17 @@ html, body {
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  background-color: #fff;
-  background: linear-gradient(#ddd, #fff);
+  background-color: #333;
   box-sizing: border-box;
-  color: #000;
+  color: #fff;
   font-size: 16px;
   font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
   font-weight: 400;
   line-height: 1.4em;
   min-height: 100vh;
+}
 
-  align-items: center;
-  display: flex;
-  justify-content: center;
+.page {
+  margin: 0 auto;
+  max-width: 600px;
 }

@@ -1,0 +1,9 @@
+.cartTable {
+ width: 100%;
+  max-width: 600px;
+}
+
+.cartTable__cell {
+  padding: 8px;
+  text-align: left;
+}
