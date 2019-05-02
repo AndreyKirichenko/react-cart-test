@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: #fff;
+  background: linear-gradient(#ddd, #fff);
+  box-sizing: border-box;
+  color: #000;
+  font-size: 16px;
+  font-family: -apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif;
+  font-weight: 400;
+  line-height: 1.4em;
+  min-height: 100vh;
+
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
