@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 const CartTableItem = (props) => {
   const { id, title, price } = props.item;
 
@@ -18,11 +20,11 @@ const CartTableItem = (props) => {
       </td>
 
       <td className='cartTable__cell'>
-        изменить
+        <Link to={`/item/${id}`}>изменить</Link>
       </td>
 
       <td className='cartTable__cell'>
-        удалить
+        <span className='link'>удалить</span>
       </td>
     </tr>
   );

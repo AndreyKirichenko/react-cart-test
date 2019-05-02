@@ -1,18 +1,36 @@
 import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './app.css';
 
-import CartTable from '../cart-table';
-import Paginator from '../paginator';
+
+import { Provider } from 'react-redux';
+import { DataSerivceProvider } from '../data-service-context';
+import DataService from '../../services/data-service';
+
+import ErrorBoundary from '../error-boundary';
+import PageCart from '../page-cart';
+import PageItem from '../page-item';
+import store from "../../store";
+
+const dataService = new DataService();
 
 const App = () => {
 
   return (
-    <main role='main' className='app'>
-      <h1>Апп!</h1>
-      <CartTable/>
-      <Paginator/>
-    </main>
+    <Provider store={store}>
+      <ErrorBoundary>
+        <DataSerivceProvider value={dataService}>
+          <Router>
+            <Route path='/' component={PageCart} exact />
+            <Route path='/cart/:page' component={PageCart} exact />
+            <Route path='/item' component={PageItem} exact />
+            <Route path='/item/:id' component={PageItem} exact />
+          </Router>
+        </DataSerivceProvider>
+      </ErrorBoundary>
+    </Provider>
+
   );
 };
 

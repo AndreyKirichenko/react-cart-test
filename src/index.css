@@ -16,11 +16,28 @@ body {
   min-height: 100vh;
 }
 
-a {
+a,
+.link {
+  cursor: pointer;
   color: #fff;
+  text-decoration: underline;
 }
 
-.page {
+.container {
+  align-items: center;
+  display: flex;
   margin: 0 auto;
   max-width: 600px;
+  min-height: 100vh;
 }
+
+.button {
+  border: none;
+  background-color: olivedrab;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 18px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+

@@ -1,0 +1,22 @@
+.pageCart {
+  width: 100%;
+}
+
+.pageCart__header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageCart__title {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.pageCart__cartTable {
+  margin-bottom: 64px;
+}
+
+.pageCart__total {
+  margin-bottom: 16px;
+}

@@ -1,11 +1,42 @@
+const initialState = {
+  data: [],
+  loading: true,
+  error: null,
+  itemsAmount: 0,
+  total: 0
+};
+
+const removeItem = (state, itemId) => {
+  const { data } = state.data;
+
+  const item = getItemById(data, itemId);
+
+  console.log(item);
+
+  return {
+    ...state
+  }
+};
+
+const getItemById = (items, itemId) => {
+  return items.find((item) => item.id === itemId);
+};
+
+// const getItemIndexById =
+
+const getItemsAmount = (data) => {
+  return data.length;
+};
+
+const getTotal = (data) => {
+  const total = data.reduce((acc, item) => {
+    return acc + item.price;
+  }, 0);
+
+  return total;
+};
+
 const reducer = (state, action) => {
-
-  const initialState = {
-    data: [],
-    loading: true,
-    error: null,
-  };
-
   if(state === undefined) {
     return initialState;
   }
@@ -16,15 +47,25 @@ const reducer = (state, action) => {
         ...state,
         data: [],
         loading: true,
-        error: null
+        error: null,
+        itemsAmount: 0,
+        total: 0
       };
 
     case 'FETCH_DATA_SUCCESS':
+      const data = action.payload;
+
+      const itemsAmount = getItemsAmount(data);
+
+      const total = getTotal(data);
+
       return {
         ...state,
-        data: action.payload,
+        data,
         loading: false,
-        error: null
+        error: null,
+        itemsAmount,
+        total
       };
 
     case 'FETCH_DATA_FAILURE':
@@ -34,6 +75,9 @@ const reducer = (state, action) => {
         loading: false,
         error: action.payload
       };
+
+    case 'ITEM_REMOVED_FROM_DATA':
+      return removeItem(state, action.payload);
 
     default:
       return state;
