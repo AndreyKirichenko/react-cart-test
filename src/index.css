@@ -16,6 +16,10 @@ body {
   min-height: 100vh;
 }
 
+a {
+  color: #fff;
+}
+
 .page {
   margin: 0 auto;
   max-width: 600px;

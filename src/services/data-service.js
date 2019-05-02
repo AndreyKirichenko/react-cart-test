@@ -3,11 +3,11 @@ export default class DataService {
   getItems(quantity=200) {
     let data = [];
 
-    for(let i = 0; i < quantity; i++) {
+    for(let i = 1; i <= quantity; i++) {
       data.push(
         {
           id: i,
-          price: Math.random() * 500,
+          price: Math.round(Math.random() * 500),
           title: `Торт ${i}`
         }
       );

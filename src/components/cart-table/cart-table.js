@@ -8,8 +8,19 @@ import { withDataService } from '../hoc'
 import { fetchData } from '../../actions';
 
 import './cart-table.css';
+import CartTableItem from '../cart-table-item/cart-table-item';
 
-const CartTable = () => {
+const CartTable = (props) => {
+  const { data } = props;
+  
+  const getRows = () => {
+    return data.map((item) => {
+      return (
+        <CartTableItem item={item} />
+      );
+    });
+  };
+
   return (
     <table className='cartTable'>
       <thead>
@@ -34,27 +45,7 @@ const CartTable = () => {
       </thead>
 
       <tbody>
-        <tr className='cartTable__row'>
-          <td className='cartTable__cell'>
-            1
-          </td>
-
-          <td className='cartTable__cell'>
-            500р
-          </td>
-
-          <td className='cartTable__cell'>
-            Торт 1
-          </td>
-
-          <td className='cartTable__cell'>
-            изменить
-          </td>
-
-          <td className='cartTable__cell'>
-            удалить
-          </td>
-        </tr>
+        {getRows()}
       </tbody>
     </table>
   );
@@ -66,7 +57,7 @@ class CartTableContainer extends Component {
   }
 
   render() {
-    const { loading, error } = this.props;
+    const { loading, error, data } = this.props;
 
     if (loading) {
       return <Spinner/>
@@ -76,7 +67,7 @@ class CartTableContainer extends Component {
       return <ErrorIndicator/>
     }
 
-    return <CartTable/>;
+    return <CartTable data={data}/>;
   }
 }
 
