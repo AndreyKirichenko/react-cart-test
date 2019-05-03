@@ -7,7 +7,7 @@ import CartTable from '../cart-table';
 import Paginator from '../paginator';
 import CartTotal from "../cart-total";
 
-const PageCart = (props) => {
+const PageCart = () => {
   return (
     <div className='pageCart'>
       <div className='pageCart__header'>

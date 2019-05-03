@@ -4,21 +4,32 @@ const initialState = {
   error: null,
   itemsAmount: 0,
   total: 0,
-  currentItem: null
+  pageItem: {}
 };
 
 const updateItem = (state, itemData) => {
-  // let { data } = state;
-  // let { id, title, price } = itemData;
-  //
-  // if(!id) {
-  //   id = getHighestItemId(data);
-  //   console.log(itemData, 123);
-  // }
+  const { data } = state;
+  const { title, price } = itemData;
+  let { id } = itemData;
+
+  if(!id) {
+    id = getHighestItemId(data) + 1;
+  }
+
+  
+
+  const newData = [
+    ...data,
+    {
+      id,
+      title,
+      price
+    }
+  ];
 
   return {
     ...state,
-    // data
+    data: newData
   };
 };
 
@@ -33,20 +44,20 @@ const getHighestItemId = (data) => {
     return 0;
   };
 
-  return data.sort(compare);
+  return data.sort(compare)[data.length - 1].id;
 };
 
 const getItem = (state, itemId) => {
   const itemIndex = getIndexById(state.data, itemId);
 
-  const currentItem = state.data[itemIndex] || {
+  const pageItem = state.data[itemIndex] || {
     title: 'Новый торт',
-    price: 0
+    price: 100
   };
 
   return {
     ...state,
-    currentItem
+    pageItem
   }
 };
 
