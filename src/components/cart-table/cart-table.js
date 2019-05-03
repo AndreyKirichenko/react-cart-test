@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import { withDataService } from '../hoc'
 import { fetchData, removeItem } from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
@@ -55,8 +53,7 @@ const CartTable = (props) => {
 
 class CartTableContainer extends Component {
   componentDidMount() {
-    console.log('CartTableContainer');
-    // this.props.fetchData();
+    this.props.fetchData();
   }
 
   render() {
@@ -82,14 +79,11 @@ const mapStateToProps = ({ data, loading, error }) => {
   }
 };
 
-const mapDispatchToProps = (dispatch, { dataService }) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchData: () => dispatch(fetchData(dispatch, dataService)),
+    fetchData: () => dispatch(fetchData(dispatch)),
     removeItem: (id) => dispatch(removeItem(id))
   }
 };
 
-export default compose(
-  withDataService(),
-  connect(mapStateToProps, mapDispatchToProps)
-)(CartTableContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CartTableContainer);

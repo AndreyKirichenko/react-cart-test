@@ -22,17 +22,6 @@ const updateItem = (state, itemData) => {
   };
 };
 
-const getItem = (state, itemId) => {
-  const itemIndex = getIndexById(state.data, itemId);
-
-  console.log(123, state.data[itemIndex]);
-
-  return {
-    ...state,
-    currentItem: state.data[itemIndex]
-  }
-};
-
 const getHighestItemId = (data) => {
   const compare = (a, b) => {
     if (a.id < b.id) {
@@ -45,6 +34,20 @@ const getHighestItemId = (data) => {
   };
 
   return data.sort(compare);
+};
+
+const getItem = (state, itemId) => {
+  const itemIndex = getIndexById(state.data, itemId);
+
+  const currentItem = state.data[itemIndex] || {
+    title: 'Новый торт',
+    price: 0
+  };
+
+  return {
+    ...state,
+    currentItem
+  }
 };
 
 const removeItem = (state, itemId) => {
@@ -134,7 +137,6 @@ const reducer = (state, action) => {
       return updateItem(state, action.payload);
 
     case 'ITEM_GET_FROM_DATA':
-      console.log(321, action.payload);
       return getItem(state, action.payload);
 
     default:

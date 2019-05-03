@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { compose } from 'redux';
-import { withDataService } from '../hoc';
+
 import { connect } from 'react-redux';
 
 import { fetchData, updateItem, getItem } from '../../actions';
-import Spinner from '../cart-table/cart-table';
+import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
 import './page-item.css';
@@ -38,11 +37,11 @@ class PageItem extends Component{
       </div>
     );
   }
-};
+}
 
 class PageItemContainer extends Component {
   componentDidMount() {
-    // this.props.fetchData();
+    this.props.fetchData();
   }
 
   onSubmit = (event) => {
@@ -52,7 +51,8 @@ class PageItemContainer extends Component {
   };
 
   onGetItem = () => {
-    getItem(parseInt(this.props.match.params.id));
+    const itemId = parseInt(this.props.match.params.id);
+    this.props.getItem(itemId);
   };
 
   render() {
@@ -78,15 +78,12 @@ const mapStateToProps = ({ loading, error, currentItem }) => {
   }
 };
 
-const mapDispatchToProps = (dispatch, { dataService }) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    // fetchData: fetchData(dispatch, dataService),
+    fetchData: () => dispatch(fetchData(dispatch)),
     updateItem: (itemData) => dispatch(updateItem(itemData)),
     getItem: (itemId) => dispatch(getItem(itemId))
   }
 };
 
-export default compose(
-  withDataService(),
-  connect(mapStateToProps, mapDispatchToProps)
-)(PageItemContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(PageItemContainer);

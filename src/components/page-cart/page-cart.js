@@ -8,7 +8,6 @@ import Paginator from '../paginator';
 import CartTotal from "../cart-total";
 
 const PageCart = (props) => {
-
   return (
     <div className='pageCart'>
       <div className='pageCart__header'>

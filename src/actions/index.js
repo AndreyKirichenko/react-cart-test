@@ -1,3 +1,5 @@
+import DataService from '../services/data-service'
+
 const dataRequested = () => {
   return {
     type: 'FETCH_DATA_REQUEST'
@@ -18,14 +20,13 @@ const dataError = (error) => {
   }
 };
 
-const fetchData = (dispatch, dataService) => () => {
-  console.log(123);
+const fetchData = (dispatch) => () => {
+  const dataService = new DataService();
   dispatch(dataRequested());
 
   const preloadedState = JSON.parse(window.localStorage.getItem('state'));
 
   if(preloadedState && preloadedState.data) {
-    console.log('preloadedState.data', preloadedState);
     dispatch(dataLoaded(preloadedState.data));
     return;
   }
