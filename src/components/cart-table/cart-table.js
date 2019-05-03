@@ -55,7 +55,8 @@ const CartTable = (props) => {
 
 class CartTableContainer extends Component {
   componentDidMount() {
-    this.props.fetchData();
+    console.log('CartTableContainer');
+    // this.props.fetchData();
   }
 
   render() {
@@ -83,7 +84,7 @@ const mapStateToProps = ({ data, loading, error }) => {
 
 const mapDispatchToProps = (dispatch, { dataService }) => {
   return {
-    fetchData: fetchData(dispatch, dataService),
+    fetchData: () => dispatch(fetchData(dispatch, dataService)),
     removeItem: (id) => dispatch(removeItem(id))
   }
 };

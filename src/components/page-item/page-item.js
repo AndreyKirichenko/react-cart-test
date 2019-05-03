@@ -42,7 +42,7 @@ class PageItem extends Component{
 
 class PageItemContainer extends Component {
   componentDidMount() {
-    this.props.fetchData();
+    // this.props.fetchData();
   }
 
   onSubmit = (event) => {
@@ -80,7 +80,7 @@ const mapStateToProps = ({ loading, error, currentItem }) => {
 
 const mapDispatchToProps = (dispatch, { dataService }) => {
   return {
-    fetchData: fetchData(dispatch, dataService),
+    // fetchData: fetchData(dispatch, dataService),
     updateItem: (itemData) => dispatch(updateItem(itemData)),
     getItem: (itemId) => dispatch(getItem(itemId))
   }
