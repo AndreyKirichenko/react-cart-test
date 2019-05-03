@@ -2,24 +2,26 @@ import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
+import { withDataService } from '../hoc'
+import { fetchData, removeItem } from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
-import { withDataService } from '../hoc'
-import { fetchData } from '../../actions';
-
-import './cart-table.css';
 import CartTableItem from '../cart-table-item/cart-table-item';
 
+import './cart-table.css';
+
 const CartTable = (props) => {
-  const { data } = props;
+  const { data, removeItem } = props;
   
   const getRows = () => {
     return data.map((item) => {
       return (
-        <CartTableItem key={item.id} item={item} />
+        <CartTableItem removeItem={removeItem} key={item.id} item={item} />
       );
     });
   };
+
+  if(!data.length) return <span>Корзина пуста</span>;
 
   return (
     <table className='cartTable'>
@@ -57,7 +59,7 @@ class CartTableContainer extends Component {
   }
 
   render() {
-    const { loading, error, data } = this.props;
+    const { loading, error, data, removeItem } = this.props;
 
     if (loading) {
       return <Spinner/>
@@ -67,7 +69,7 @@ class CartTableContainer extends Component {
       return <ErrorIndicator/>
     }
 
-    return <CartTable data={data}/>;
+    return <CartTable removeItem={removeItem} data={data}/>;
   }
 }
 
@@ -81,7 +83,8 @@ const mapStateToProps = ({ data, loading, error }) => {
 
 const mapDispatchToProps = (dispatch, { dataService }) => {
   return {
-    fetchData: fetchData(dispatch, dataService)
+    fetchData: fetchData(dispatch, dataService),
+    removeItem: (id) => dispatch(removeItem(id))
   }
 };
 

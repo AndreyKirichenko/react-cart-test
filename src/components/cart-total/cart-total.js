@@ -9,7 +9,7 @@ const CartTotal = (props) => {
   if (itemsAmount === 0) return null;
 
   return (
-    <div>В корзине {itemsAmount} товаров на {total}</div>
+    <div>В корзине {itemsAmount} товаров на {total} рублей</div>
   );
 };
 

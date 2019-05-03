@@ -15,6 +15,14 @@ import store from "../../store";
 
 const dataService = new DataService();
 
+store.subscribe(() => {
+  const { data } = store.getState();
+  if(data) {
+    const stateToPersist = JSON.stringify(store.getState());
+    window.localStorage.setItem('state', stateToPersist);
+  }
+});
+
 const App = () => {
 
   return (

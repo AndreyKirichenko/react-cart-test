@@ -24,9 +24,11 @@ a,
 }
 
 .container {
+  box-sizing: border-box;
   align-items: center;
   display: flex;
   margin: 0 auto;
+  padding: 0 16px;
   max-width: 600px;
   min-height: 100vh;
 }
@@ -37,7 +39,27 @@ a,
   border-radius: 16px;
   color: #fff;
   font-size: 18px;
+  line-height: 1em;
   padding: 8px 16px;
   text-decoration: none;
 }
 
+.field {
+  margin-bottom: 16px;
+}
+
+.field__label,
+.field__input {
+  width: 100%;
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.field__input {
+  box-sizing: border-box;
+  line-height: 36px;
+  padding: 0 8px;
+}
