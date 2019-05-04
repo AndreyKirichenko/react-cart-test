@@ -9,27 +9,32 @@ const initialState = {
 
 const updateItem = (state, itemData) => {
   const { data } = state;
-  const { title, price } = itemData;
-  let { id } = itemData;
+  const { id, title, price } = itemData;
+
+  let newId = id;
 
   if(!id) {
-    id = getHighestItemId(data) + 1;
-  }
+    newId = getHighestItemId(data) + 1;
 
-  
+    data.push({
+      id: newId,
+      title,
+      price
+    });
 
-  const newData = [
-    ...data,
-    {
+  } else {
+    const idx = getIndexById(data, id);
+
+    data[idx] = {
       id,
       title,
       price
     }
-  ];
+  }
 
   return {
     ...state,
-    data: newData
+    data
   };
 };
 
@@ -92,11 +97,9 @@ const getItemsAmount = (data) => {
 };
 
 const getTotal = (data) => {
-  const total = data.reduce((acc, item) => {
-    return acc + item.price;
+  return data.reduce((acc, item) => {
+    return acc + parseInt(item.price);
   }, 0);
-
-  return total;
 };
 
 const reducer = (state, action) => {
