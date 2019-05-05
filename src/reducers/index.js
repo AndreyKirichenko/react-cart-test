@@ -4,33 +4,28 @@ const initialState = {
   error: null,
   itemsAmount: 0,
   total: 0,
-  pageItem: {}
+  pageItem: {},
+  pageCart: {
+    pageNum: 1,
+    itemsPerPage: 5
+  }
 };
 
 const updateItem = (state, itemData) => {
   const { data } = state;
   const { id, title, price } = itemData;
 
-  let newId = id;
-
-  if(!id) {
-    newId = getHighestItemId(data) + 1;
-
-    data.push({
-      id: newId,
-      title,
-      price
-    });
-
-  } else {
-    const idx = getIndexById(data, id);
-
-    data[idx] = {
-      id,
-      title,
-      price
-    }
+  if(!data.length || !id ) {
+    return createItem(state, itemData);
   }
+
+  const idx = getIndexById(data, id);
+
+  data[idx] = {
+    id,
+    title,
+    price
+  };
 
   return {
     ...state,
@@ -38,7 +33,25 @@ const updateItem = (state, itemData) => {
   };
 };
 
-const getHighestItemId = (data) => {
+const createItem = (state, itemData) => {
+  const { data } = state;
+
+  const { title, price } = itemData;
+
+  return {
+    ...state,
+    data: [
+      ...data,
+      {
+        id: getNewItemId(data),
+        title,
+        price
+
+      }]
+  };
+};
+
+const getNewItemId = (data) => {
   const compare = (a, b) => {
     if (a.id < b.id) {
       return -1;
@@ -49,7 +62,11 @@ const getHighestItemId = (data) => {
     return 0;
   };
 
-  return data.sort(compare)[data.length - 1].id;
+  if (!data || !data.length) {
+    return 1;
+  }
+
+  return data.sort(compare)[data.length - 1].id + 1;
 };
 
 const getItem = (state, itemId) => {
@@ -122,6 +139,8 @@ const reducer = (state, action) => {
 
     case 'FETCH_DATA_SUCCESS':
       const data = action.payload;
+
+      console.log('FETCH_DATA_SUCCESS', action.payload);
 
       const itemsAmount = getItemsAmount(data);
 

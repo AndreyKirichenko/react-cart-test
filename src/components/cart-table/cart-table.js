@@ -53,6 +53,7 @@ const CartTable = (props) => {
 
 class CartTableContainer extends Component {
   componentDidMount() {
+    console.log('this.props', this.props);
     this.props.fetchData();
   }
 
