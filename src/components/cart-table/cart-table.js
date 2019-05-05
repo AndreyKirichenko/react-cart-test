@@ -1,25 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import { fetchData, removeItem } from '../../actions';
-import Spinner from '../spinner';
-import ErrorIndicator from '../error-indicator';
-import CartTableItem from '../cart-table-item/cart-table-item';
+import React from 'react';
 
 import './cart-table.css';
 
+import CartTableItem from '../cart-table-item/cart-table-item';
+
 const CartTable = (props) => {
-  const { data, removeItem } = props;
+  const { itemsOnPage, onRemoveItem } = props;
   
   const getRows = () => {
-    return data.map((item) => {
+    return itemsOnPage.map((item) => {
       return (
-        <CartTableItem removeItem={removeItem} key={item.id} item={item} />
+        <CartTableItem onRemoveItem={onRemoveItem} key={item.id} item={item} />
       );
     });
   };
 
-  if(!data.length) return <span>Корзина пуста</span>;
+  if(!itemsOnPage.length) return <span>Корзина пуста</span>;
 
   return (
     <table className='cartTable'>
@@ -51,40 +47,4 @@ const CartTable = (props) => {
   );
 };
 
-class CartTableContainer extends Component {
-  componentDidMount() {
-    console.log('this.props', this.props);
-    this.props.fetchData();
-  }
-
-  render() {
-    const { loading, error, data, removeItem } = this.props;
-
-    if (loading) {
-      return <Spinner/>
-    }
-
-    if(error) {
-      return <ErrorIndicator/>
-    }
-
-    return <CartTable removeItem={removeItem} data={data}/>;
-  }
-}
-
-const mapStateToProps = ({ data, loading, error }) => {
-  return {
-    data,
-    loading,
-    error
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: () => dispatch(fetchData(dispatch)),
-    removeItem: (id) => dispatch(removeItem(id))
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartTableContainer);
+export default CartTable;

@@ -2,13 +2,55 @@ const initialState = {
   data: [],
   loading: true,
   error: null,
-  itemsAmount: 0,
-  total: 0,
-  pageItem: {},
+  cartTotal: {
+    itemsAmount: 0,
+    total: 0,
+  },
+  pageItem: {
+    title: '',
+    price: 0
+  },
   pageCart: {
     pageNum: 1,
-    itemsPerPage: 5
+    itemsPerPage: 5,
+    itemsOnPage: [],
+    pagesQuantity: 1
   }
+};
+
+const setCartPageNum = (state, pageNum = 1) => {
+  const { data, pageCart: { itemsPerPage }  } = state;
+
+  const pagesQuantity = getPagesQuantityOnCartPage(data, itemsPerPage, pageNum);
+
+  let itemsOnPage = getItemsOnPage(data, itemsPerPage, pageNum);
+
+  if(!itemsOnPage.length) {
+    itemsOnPage = getItemsOnPage(data, itemsPerPage, pagesQuantity);
+  }
+
+  return {
+    ...state,
+    pageCart: {
+      pageNum,
+      itemsPerPage,
+      itemsOnPage,
+      pagesQuantity
+    }
+  }
+};
+
+const getItemsOnPage = (data, itemsPerPage, pageNum) => {
+  const startIdx = itemsPerPage * (pageNum - 1);
+  const endIdx = startIdx + itemsPerPage;
+
+  return [
+    ...data.slice(startIdx, endIdx)
+  ]
+};
+
+const getPagesQuantityOnCartPage = (date, itemsPerPage) => {
+  return Math.ceil(date.length / itemsPerPage);
 };
 
 const updateItem = (state, itemData) => {
@@ -93,20 +135,22 @@ const removeItem = (state, itemId) => {
     ...data.slice(itemIndex + 1)
   ];
 
-  const itemsAmount = getItemsAmount(newData);
-
-  const total = getTotal(newData);
-
   return {
     ...state,
     data: newData,
-    itemsAmount,
-    total
+    cartTotal: getCartTotal(newData)
   }
 };
 
 const getIndexById = (data, itemId) => {
   return data.findIndex(({ id }) => id === itemId);
+};
+
+const getCartTotal = (data) => {
+  return {
+    itemsAmount: getItemsAmount(data),
+    total: getTotal(data)
+  }
 };
 
 const getItemsAmount = (data) => {
@@ -140,8 +184,6 @@ const reducer = (state, action) => {
     case 'FETCH_DATA_SUCCESS':
       const data = action.payload;
 
-      console.log('FETCH_DATA_SUCCESS', action.payload);
-
       const itemsAmount = getItemsAmount(data);
 
       const total = getTotal(data);
@@ -171,6 +213,9 @@ const reducer = (state, action) => {
 
     case 'ITEM_GET_FROM_DATA':
       return getItem(state, action.payload);
+
+    case 'SET_PAGE_CART_NUM':
+      return setCartPageNum(state, action.payload);
 
     default:
       return state;

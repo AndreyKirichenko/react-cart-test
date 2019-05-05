@@ -26,21 +26,27 @@ const fetchData = (dispatch) => () => {
 
   const preloadedState = JSON.parse(window.localStorage.getItem('state'));
 
-  if(preloadedState && preloadedState.data) {
-    dispatch(dataLoaded(preloadedState.data));
-    return;
-  }
+  return new Promise((resolve, reject) => {
+    if(preloadedState && preloadedState.data) {
+      dispatch(dataLoaded(preloadedState.data));
+      resolve();
 
-  dataService.getData()
-    .then((data) => {
-      dispatch(dataLoaded(data));
-    })
-    .catch((err) => {
-      dispatch(dataError(err));
-    });
+    } else {
+      dataService.getData()
+        .then((data) => {
+          dispatch(dataLoaded(data));
+          resolve();
+        })
+        .catch((err) => {
+          dispatch(dataError(err));
+          reject();
+        });
+    }
+  });
 };
 
 const removeItem = (id) => {
+  console.log('removeItem', id);
   return {
     type: 'ITEM_REMOVED_FROM_DATA',
     payload: id
@@ -61,9 +67,17 @@ const getItem = (itemId) => {
   };
 };
 
+const setCartPageNum = (num) => {
+  return {
+    type: 'SET_PAGE_CART_NUM',
+    payload: num
+  };
+};
+
 export {
   fetchData,
   removeItem,
   updateItem,
-  getItem
+  getItem,
+  setCartPageNum
 };

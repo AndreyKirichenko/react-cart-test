@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CartTableItem = (props) => {
-  const { removeItem, item: { id, title, price }} = props;
+  const { onRemoveItem, item: { id, title, price }} = props;
 
   return (
     <tr className='cartTable__row'>
@@ -25,7 +25,7 @@ const CartTableItem = (props) => {
 
       <td className='cartTable__cell'>
         <span className='link'
-              onClick={() => removeItem(id)}>
+              onClick={() => onRemoveItem(id)}>
           удалить
         </span>
       </td>
