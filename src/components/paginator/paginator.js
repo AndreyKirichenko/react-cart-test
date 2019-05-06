@@ -1,33 +1,30 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import './paginator.css';
 
-const Paginator = () => {
+const Paginator = (props) => {
+  const { pageNum, pagesQuantity } = props;
+
+  const getItem = (i) => {
+    return (
+      <li className='paginator__item' key={i}>
+        <Link to={`/cart/${i}`} className='paginator__link'>
+          {i}
+        </Link>
+      </li>
+    );
+  };
+
+  const pages = [];
+
+  for(let i = 1; i <= pagesQuantity; i++) {
+    pages.push(getItem(i));
+  }
+
   return (
     <ul className='paginator'>
-      <li className='paginator__item'>
-        <a href='#' className='paginator__link'>
-          1
-        </a>
-      </li>
-
-      <li className='paginator__item'>
-        <a href='#' className='paginator__link'>
-          2
-        </a>
-      </li>
-
-      <li className='paginator__item'>
-        <a href='#' className='paginator__link'>
-          3
-        </a>
-      </li>
-
-      <li className='paginator__item'>
-        <a href='#' className='paginator__link'>
-          20
-        </a>
-      </li>
+      {pages}
     </ul>
   );
 };

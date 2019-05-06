@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import './app.css';
@@ -22,10 +22,12 @@ const App = () => {
     <Provider store={store}>
       <ErrorBoundary>
         <Router>
-          <Route path='/' component={PageCart} exact />
-          <Route path='/cart/:page' component={PageCart} exact />
-          <Route path='/item' component={PageItem} exact />
-          <Route path='/item/:id' component={PageItem} exact />
+          <Switch>
+            <Route path='/' component={PageCart} exact />
+            <Route path='/cart/:page' component={PageCart} />
+            <Route path='/item' component={PageItem} />
+            <Route path='/item/:id' component={PageItem} />
+          </Switch>
         </Router>
       </ErrorBoundary>
     </Provider>

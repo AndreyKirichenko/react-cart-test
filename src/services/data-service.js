@@ -1,6 +1,6 @@
 export default class DataService {
 
-  getItems(quantity=5) {
+  getItems(quantity=200) {
     let data = [];
 
     for(let i = 1; i <= quantity; i++) {

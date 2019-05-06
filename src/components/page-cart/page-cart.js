@@ -41,11 +41,19 @@ const PageCart = (props) => {
 
 class PageCartContainer extends Component {
   componentDidMount() {
-    const page = parseInt(this.props.match.params.page || 1);
-
     this.props.fetchData().then(() => {
-      this.props.updateCartPageNum(page);
+      this.props.updateCartPageNum(this.getCurrentPage());
     });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.match.params.page !== this.props.match.params.page) {
+      this.props.updateCartPageNum(this.getCurrentPage());
+    }
+  }
+
+  getCurrentPage() {
+    return parseInt(this.props.match.params.page || 1);
   }
 
   onRemoveItem = (itemId) => {
