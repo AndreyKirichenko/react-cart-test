@@ -1,7 +1,9 @@
 const initialState = {
-  data: [],
-  loading: true,
-  error: null,
+  common: {
+    data: [],
+    loading: true,
+    error: null,
+  },
   cartTotal: {
     itemsAmount: 0,
     total: 0,
@@ -29,7 +31,7 @@ const updateCartPageNum = (state, pageNum) => {
 };
 
 const updateItemsOnPageCart = (state) => {
-  const { data, pageCart: { itemsPerPage, pageNum }  } = state;
+  const { common: { data }, pageCart: { itemsPerPage, pageNum }  } = state;
 
   const pagesQuantity = getPagesQuantityOnCartPage(data, itemsPerPage, pageNum);
 
@@ -63,7 +65,7 @@ const getPagesQuantityOnCartPage = (date, itemsPerPage) => {
 };
 
 const updateItem = (state, itemData) => {
-  const { data } = state;
+  const { data } = state.common;
   const { id, title, price } = itemData;
 
   if(!data.length || !id ) {
@@ -80,25 +82,31 @@ const updateItem = (state, itemData) => {
 
   return {
     ...state,
-    data
+    common: {
+      ...state.common,
+      data
+    }
   };
 };
 
 const createItem = (state, itemData) => {
-  const { data } = state;
+  const { data } = state.common;
 
   const { title, price } = itemData;
 
   return {
     ...state,
-    data: [
-      ...data,
-      {
-        id: getNewItemId(data),
-        title,
-        price
+    common: {
+      ...state.common,
+      data: [
+        ...data,
+        {
+          id: getNewItemId(data),
+          title,
+          price
 
-      }]
+        }]
+    }
   };
 };
 
@@ -121,9 +129,10 @@ const getNewItemId = (data) => {
 };
 
 const getItem = (state, itemId) => {
-  const itemIndex = getIndexById(state.data, itemId);
+  const { data } = state.common;
+  const itemIndex = getIndexById(data, itemId);
 
-  const pageItem = state.data[itemIndex] || {
+  const pageItem = data[itemIndex] || {
     title: 'Новый торт',
     price: 100
   };
@@ -135,7 +144,7 @@ const getItem = (state, itemId) => {
 };
 
 const removeItem = (state, itemId) => {
-  const { data } = state;
+  const { data } = state.common;
 
   const itemIndex = getIndexById(data, itemId);
 
@@ -146,7 +155,11 @@ const removeItem = (state, itemId) => {
 
   return {
     ...state,
-    data: newData,
+    common: {
+      ...state.common,
+      data: newData,
+    }
+
   }
 };
 
@@ -155,7 +168,7 @@ const getIndexById = (data, itemId) => {
 };
 
 const updateCartTotal = (state) => {
-  const { data } = state;
+  const { data } = state.common;
   return {
     ...state,
     cartTotal: {
@@ -184,35 +197,35 @@ const reducer = (state, action) => {
     case 'FETCH_DATA_REQUEST':
       return {
         ...state,
-        data: null,
-        loading: true,
-        error: null,
-        itemsAmount: 0,
-        total: 0
+        common: {
+          ...state.common,
+          data: null,
+          loading: true,
+          error: null,
+        }
+
       };
 
     case 'FETCH_DATA_SUCCESS':
       const data = action.payload;
 
-      const itemsAmount = getItemsAmount(data);
-
-      const total = getTotal(data);
-
       return {
         ...state,
-        data,
-        loading: false,
-        error: null,
-        itemsAmount,
-        total
+        common: {
+          data,
+          loading: false,
+          error: null,
+        }
       };
 
     case 'FETCH_DATA_FAILURE':
       return {
         ...state,
-        data: [],
-        loading: false,
-        error: action.payload
+        common: {
+          data: [],
+          loading: false,
+          error: action.payload
+        }
       };
 
     case 'REMOVE_ITEM_FROM_DATA':

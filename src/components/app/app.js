@@ -10,7 +10,8 @@ import PageItem from '../page-item';
 import store from "../../store";
 
 store.subscribe(() => {
-  const { data } = store.getState();
+  const { data } = store.getState().common;
+
   if(data) {
     const stateToPersist = JSON.stringify(store.getState());
     window.localStorage.setItem('state', stateToPersist);

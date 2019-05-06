@@ -27,8 +27,8 @@ const fetchData = (dispatch) => () => {
   const preloadedState = JSON.parse(window.localStorage.getItem('state'));
 
   return new Promise((resolve, reject) => {
-    if(preloadedState && preloadedState.data) {
-      dispatch(dataLoaded(preloadedState.data));
+    if(preloadedState && preloadedState.common.data) {
+      dispatch(dataLoaded(preloadedState.common.data));
       resolve();
 
     } else {
