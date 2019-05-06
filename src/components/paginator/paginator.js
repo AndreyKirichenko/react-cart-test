@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './paginator.css';
 
-const RADIUS = 4;
+const RADIUS = 2;
 
 const Paginator = (props) => {
   const { pageNum, pagesQuantity } = props;

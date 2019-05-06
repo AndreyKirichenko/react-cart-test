@@ -122,7 +122,7 @@ class PageItemContainer extends Component {
   };
 
   render() {
-    const { loading, error, pageItem } = this.props;
+    const { common: { loading, error }, pageItem } = this.props;
 
     if (loading) {
       return <Spinner/>
@@ -138,7 +138,7 @@ class PageItemContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ loading, error, pageItem }) => {
+const mapStateToProps = ({ common: { loading, error }, pageItem }) => {
   return {
     loading,
     error,

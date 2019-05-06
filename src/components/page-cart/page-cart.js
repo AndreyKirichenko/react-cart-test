@@ -61,7 +61,7 @@ class PageCartContainer extends Component {
   };
 
   render() {
-    const { loading, error, pageCart, cartTotal } = this.props;
+    const { common: { loading, error }, pageCart, cartTotal } = this.props;
 
 
     if (loading) {
@@ -76,10 +76,9 @@ class PageCartContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ loading, error, pageCart, cartTotal }) => {
+const mapStateToProps = ({ common, pageCart, cartTotal }) => {
   return {
-    loading,
-    error,
+    common,
     pageCart,
     cartTotal
   }
