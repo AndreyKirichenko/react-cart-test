@@ -138,10 +138,9 @@ class PageItemContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ common: { loading, error }, pageItem }) => {
+const mapStateToProps = ({ common, pageItem }) => {
   return {
-    loading,
-    error,
+    common,
     pageItem
   }
 };

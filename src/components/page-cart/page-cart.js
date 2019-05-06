@@ -12,11 +12,13 @@ import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
 const PageCart = (props) => {
-  const { pageCart: {
+  const {
+    pageCart: {
       itemsOnPage,
       pageNum,
       pagesQuantity,
     },
+
     cartTotal,
     onRemoveItem
   } = props;

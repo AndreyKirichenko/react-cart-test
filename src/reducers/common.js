@@ -1,3 +1,5 @@
+import { getIndexById } from './utils';
+
 const initialState = {
   data: [],
   loading: true,
@@ -18,10 +20,6 @@ const removeItem = (state, itemId) => {
     ...state.common,
     data: newData,
   };
-};
-
-const getIndexById = (data, itemId) => {
-  return data.findIndex(({ id }) => id === itemId);
 };
 
 const updateItem = (state, itemData) => {

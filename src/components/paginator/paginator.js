@@ -8,6 +8,10 @@ const RADIUS = 2;
 const Paginator = (props) => {
   const { pageNum, pagesQuantity } = props;
 
+  if(pagesQuantity === 1) {
+    return null;
+  }
+
   const getItem = (i) => {
     let classNames = 'paginator__link';
 

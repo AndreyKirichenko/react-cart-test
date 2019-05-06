@@ -6,11 +6,8 @@ const initialState = {
 const updateCartTotal = (state) => {
   const { data } = state.common;
   return {
-    ...state,
-    cartTotal: {
-      itemsAmount: getItemsAmount(data),
-      total: getTotal(data)
-    }
+    itemsAmount: getItemsAmount(data),
+    total: getTotal(data)
   }
 };
 

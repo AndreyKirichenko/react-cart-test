@@ -1,3 +1,5 @@
+import { getIndexById } from './utils';
+
 const initialState = {
   title: '',
   price: 0
@@ -13,12 +15,6 @@ const getItem = (state, itemId) => {
   };
 
   return pageItem;
-};
-
-
-//DRY
-const getIndexById = (data, itemId) => {
-  return data.findIndex(({ id }) => id === itemId);
 };
 
 const pageItem = (state, action) => {
