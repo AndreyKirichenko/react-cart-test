@@ -25,7 +25,7 @@ const App = () => {
           <Switch>
             <Route path='/' component={PageCart} exact />
             <Route path='/cart/:page' component={PageCart} />
-            <Route path='/item' component={PageItem} />
+            <Route path='/item' component={PageItem} exact />
             <Route path='/item/:id' component={PageItem} />
           </Switch>
         </Router>

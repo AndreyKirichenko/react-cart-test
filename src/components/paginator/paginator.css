@@ -5,15 +5,28 @@
   margin: 16px 0;
 }
 
-.paginator__item:after {
-  content: '|';
+.paginator__item {
   margin: 0 4px;
 }
 
-.paginator__item:last-child:after {
+.paginator__item:before {
+  content: '|';
+  margin: 0 4px 0 0;
+}
+
+.paginator__item:first-child:before {
+  display: none;
+}
+
+.paginator__item--dotts + .paginator__item:before {
   display: none;
 }
 
 .paginator__link {
   text-decoration: none;
+}
+
+.paginator__link--active {
+  font-weight: 600;
+  color: #777;
 }

@@ -180,8 +180,6 @@ const reducer = (state, action) => {
     return initialState;
   }
 
-  console.log(action.type);
-
   switch (action.type) {
     case 'FETCH_DATA_REQUEST':
       return {
