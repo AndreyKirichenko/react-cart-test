@@ -45,32 +45,52 @@ const fetchData = (dispatch) => () => {
   });
 };
 
-const removeItem = (id) => {
-  console.log('removeItem', id);
-  return {
-    type: 'ITEM_REMOVED_FROM_DATA',
+const removeItem = (dispatch, id) => () => {
+  dispatch({
+    type: 'REMOVE_ITEM_FROM_DATA',
     payload: id
-  };
+  });
+
+  dispatch(updateItemsOnPageCart());
+  dispatch(updateCartTotal());
 };
 
-const updateItem = (itemData) => {
-  return {
-    type: 'ITEM_UPDATED_IN_DATA',
+const updateItem = (dispatch, itemData) => () => {
+  dispatch({
+    type: 'UPDATE_ITEM_IN_DATA',
     payload: itemData
-  };
+  });
+
+  dispatch(updateItemsOnPageCart());
+  dispatch(updateCartTotal());
 };
 
 const getItem = (itemId) => {
   return {
-    type: 'ITEM_GET_FROM_DATA',
+    type: 'GET_ITEM_FROM_DATA',
     payload: itemId
   };
 };
 
-const setCartPageNum = (num) => {
+const updateItemsOnPageCart = () => {
   return {
-    type: 'SET_PAGE_CART_NUM',
+    type: 'UPDATE_ITEMS_ON_PAGE_CART'
+  };
+};
+
+const updateCartPageNum = (dispatch, num) => () => {
+  dispatch({
+    type: 'UPDATE_PAGE_CART_NUM',
     payload: num
+  });
+
+  dispatch(updateItemsOnPageCart());
+  dispatch(updateCartTotal());
+};
+
+const updateCartTotal = () => {
+  return {
+    type: 'UPDATE_CART_TOTAL'
   };
 };
 
@@ -79,5 +99,5 @@ export {
   removeItem,
   updateItem,
   getItem,
-  setCartPageNum
+  updateCartPageNum
 };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { fetchData, updateItem, getItem } from '../../actions';
+import {fetchData, updateItem, getItem, removeItem} from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
@@ -149,7 +149,7 @@ const mapStateToProps = ({ loading, error, pageItem }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: () => dispatch(fetchData(dispatch)),
-    updateItem: (itemData) => dispatch(updateItem(itemData)),
+    updateItem: (itemData) => dispatch(updateItem(dispatch, itemData)),
     getItem: (itemId) => dispatch(getItem(itemId))
   }
 };

@@ -7,14 +7,11 @@ import './page-cart.css';
 import CartTable from '../cart-table';
 import Paginator from '../paginator';
 import CartTotal from '../cart-total';
-import { fetchData, setCartPageNum, removeItem } from '../../actions';
+import { fetchData, updateCartPageNum, removeItem } from '../../actions';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 
 const PageCart = (props) => {
-
-  console.log(props);
-
   const { pageCart: {
       itemsOnPage,
       pageNum,
@@ -37,17 +34,17 @@ const PageCart = (props) => {
       <div className='pageCart__total'>
         <CartTotal {...cartTotal} />
       </div>
-      {/*<Paginator />*/}
+      <Paginator pageNum={pageNum} pagesQuantity={pagesQuantity} />
     </div>
   );
 };
 
 class PageCartContainer extends Component {
   componentDidMount() {
-    const page = parseInt(this.props.match.params.page);
+    const page = parseInt(this.props.match.params.page || 1);
 
     this.props.fetchData().then(() => {
-      this.props.setCartPageNum(page);
+      this.props.updateCartPageNum(page);
     });
   }
 
@@ -83,8 +80,8 @@ const mapStateToProps = ({ loading, error, pageCart, cartTotal }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchData: () => dispatch(fetchData(dispatch)),
-    setCartPageNum: (pageNum) => dispatch(setCartPageNum(pageNum)),
-    removeItem: (id) => dispatch(removeItem(id)),
+    updateCartPageNum: (pageNum) => dispatch(updateCartPageNum(dispatch, pageNum)),
+    removeItem: (id) => dispatch(removeItem(dispatch, id)),
   }
 };
 

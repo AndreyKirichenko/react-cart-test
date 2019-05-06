@@ -18,29 +18,38 @@ const initialState = {
   }
 };
 
-const setCartPageNum = (state, pageNum = 1) => {
-  const { data, pageCart: { itemsPerPage }  } = state;
+const updateCartPageNum = (state, pageNum) => {
+  return {
+    ...state,
+    pageCart: {
+      ...state.pageCart,
+      pageNum,
+    }
+  }
+};
+
+const updateItemsOnPageCart = (state) => {
+  const { data, pageCart: { itemsPerPage, pageNum }  } = state;
 
   const pagesQuantity = getPagesQuantityOnCartPage(data, itemsPerPage, pageNum);
 
-  let itemsOnPage = getItemsOnPage(data, itemsPerPage, pageNum);
+  let itemsOnPage = getItemsOnPageCart(data, itemsPerPage, pageNum);
 
   if(!itemsOnPage.length) {
-    itemsOnPage = getItemsOnPage(data, itemsPerPage, pagesQuantity);
+    itemsOnPage = getItemsOnPageCart(data, itemsPerPage, pagesQuantity);
   }
 
   return {
     ...state,
     pageCart: {
-      pageNum,
-      itemsPerPage,
+      ...state.pageCart,
       itemsOnPage,
       pagesQuantity
     }
   }
 };
 
-const getItemsOnPage = (data, itemsPerPage, pageNum) => {
+const getItemsOnPageCart = (data, itemsPerPage, pageNum) => {
   const startIdx = itemsPerPage * (pageNum - 1);
   const endIdx = startIdx + itemsPerPage;
 
@@ -138,7 +147,6 @@ const removeItem = (state, itemId) => {
   return {
     ...state,
     data: newData,
-    cartTotal: getCartTotal(newData)
   }
 };
 
@@ -146,10 +154,14 @@ const getIndexById = (data, itemId) => {
   return data.findIndex(({ id }) => id === itemId);
 };
 
-const getCartTotal = (data) => {
+const updateCartTotal = (state) => {
+  const { data } = state;
   return {
-    itemsAmount: getItemsAmount(data),
-    total: getTotal(data)
+    ...state,
+    cartTotal: {
+      itemsAmount: getItemsAmount(data),
+      total: getTotal(data)
+    }
   }
 };
 
@@ -205,17 +217,23 @@ const reducer = (state, action) => {
         error: action.payload
       };
 
-    case 'ITEM_REMOVED_FROM_DATA':
+    case 'REMOVE_ITEM_FROM_DATA':
       return removeItem(state, action.payload);
 
-    case 'ITEM_UPDATED_IN_DATA':
+    case 'UPDATE_ITEM_IN_DATA':
       return updateItem(state, action.payload);
 
-    case 'ITEM_GET_FROM_DATA':
+    case 'GET_ITEM_FROM_DATA':
       return getItem(state, action.payload);
 
-    case 'SET_PAGE_CART_NUM':
-      return setCartPageNum(state, action.payload);
+    case 'UPDATE_ITEMS_ON_PAGE_CART':
+      return updateItemsOnPageCart(state);
+
+    case 'UPDATE_PAGE_CART_NUM':
+      return updateCartPageNum(state, action.payload);
+
+    case 'UPDATE_CART_TOTAL':
+      return updateCartTotal(state);
 
     default:
       return state;
